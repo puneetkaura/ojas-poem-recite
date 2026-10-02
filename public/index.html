@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f0e6" />
+    <title>Ojas — Poem Recite</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Ojas Poem Recite home">
+          <span class="brand-mark">ओ</span>
+          <span><strong>ojas</strong><small>poem recite</small></span>
+        </a>
+        <span class="local-badge"><span class="pulse-dot"></span> Static &amp; private</span>
+      </header>
+
+      <main>
+        <section class="intro">
+          <p class="eyebrow">A little rehearsal room</p>
+          <h1>Read with the<br /><em>spoken word.</em></h1>
+          <p class="intro-copy">Prepare each poem once on your laptop. Then host the finished audio and timed lyrics as a simple, calm reading library.</p>
+        </section>
+
+        <nav class="mode-tabs" aria-label="App modes">
+          <button class="mode-tab is-active" type="button" data-mode="read">Read a poem</button>
+          <button class="mode-tab" type="button" data-mode="prepare">Prepare timing</button>
+        </nav>
+
+        <section class="mode-panel is-active" id="readMode" data-panel="read">
+          <div class="library-card">
+            <div class="card-heading">
+              <div><p class="eyebrow">Poem library</p><h2>Choose a poem</h2></div>
+              <span class="line-count" id="libraryCount">0 poems</span>
+            </div>
+            <label class="sr-only" for="poemSelect">Choose a poem</label>
+            <select id="poemSelect" class="poem-select"><option>Loading poem library…</option></select>
+            <p class="library-note" id="libraryNote">Prepared poems will appear here after they are added to <code>public/poems.json</code>.</p>
+          </div>
+
+          <section class="reading-stage" aria-labelledby="readingTitle">
+            <div class="stage-topline">
+              <div><p class="eyebrow">Follow along</p><h2 id="readingTitle">Choose a poem to begin</h2><p class="reading-author" id="readingAuthor"></p></div>
+              <span class="line-count" id="readLineCount">0 lines</span>
+            </div>
+            <audio id="readerAudio" controls preload="metadata"></audio>
+            <div class="progress-track" aria-hidden="true"><span id="readProgress"></span></div>
+            <div class="lyrics-window" id="readLyricsWindow">
+              <div class="empty-reading"><span class="empty-spark">✦</span><p>Prepared lyrics will appear here.<br />Choose a poem from the library.</p></div>
+            </div>
+            <div class="stage-footer"><span id="readCurrentLabel">Ready when you are</span><span class="keyboard-hint"><kbd>Space</kbd> play / pause</span></div>
+          </section>
+        </section>
+
+        <section class="mode-panel" id="prepareMode" data-panel="prepare">
+          <div class="composer-card">
+            <div class="card-heading">
+              <div><p class="eyebrow">Local preparation</p><h2>Make the timeline</h2></div>
+              <span class="local-only">No upload</span>
+            </div>
+            <p class="prep-copy">Paste the poem line by line. This laptop will narrate each line with a local Indian voice, create the audio, and save the subtitle timings automatically.</p>
+            <div class="prep-inputs">
+              <label class="field"><span>Poem title</span><input id="titleInput" type="text" placeholder="e.g. Twinkle, Twinkle" /></label>
+              <label class="field"><span>Voice</span><select id="voiceSelect"><option value="Lekha">Lekha · हिन्दी · India</option><option value="Tara">Tara · English · India</option><option value="Aman">Aman · English · India</option><option value="Rishi">Rishi · English · India</option></select></label>
+              <label class="field"><span>Language</span><select id="prepLanguage"><option value="en">English</option><option value="hi">हिन्दी</option></select></label>
+            </div>
+            <label class="field poem-field"><span>Lyrics — one line per row</span><textarea id="lyricsInput" placeholder="Paste the poem here, keeping each spoken line on its own row…"></textarea></label>
+            <div class="prep-actions"><button class="primary-button" id="generateAudio" type="button"><span class="button-icon">♫</span> Create audio + sync lyrics</button></div>
+            <p class="status-line" id="prepStatus" role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="timing-card is-hidden" id="timingDesk">
+            <div class="card-heading"><div><p class="eyebrow">Timing desk</p><h2>Mark each line</h2></div><span class="line-count" id="timingProgress">0 of 0 marked</span></div>
+            <audio id="prepAudio" controls preload="metadata"></audio>
+            <div class="mark-guide"><span class="guide-number">♫</span><p>The audio was generated one line at a time. Each subtitle cue is already matched to its spoken line. Preview it here before publishing.</p></div>
+            <div class="cue-list" id="cueList"></div>
+            <div class="prep-actions bottom-actions"><button class="primary-button" id="downloadJson" type="button" disabled>Download poem JSON</button></div>
+          </div>
+        </section>
+
+        <aside class="voice-note"><span class="note-mark">i</span><p><strong>How this works.</strong> The audio and timing data are prepared locally. The hosted reading page only reads the audio file and follows its cue sheet—no API key, microphone, or cloud processing is needed.</p></aside>
+      </main>
+      <footer>Made for small voices learning big poems.</footer>
+    </div>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
